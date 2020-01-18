@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel='stylesheet' type='text/css' media='screen' href="{{ url_for('static', filename='css/login.css') }}">
+</head>
+
+<body>
+    {% if data['username'] == None %}
+    <form class="box" action="/validator" method="post">
+        <h1>Sign Up</h1>
+        <p id="err"></p>
+        <input type="text" name="username" id="uname" placeholder="Username" required>
+        <input type="text" name="email" placeholder="Email Address" required>
+        <input type="password" name="password" placeholder="Password" required>
+        <input type="password" name="confirm_password" placeholder="Confirm Password" required>
+        <input type="hidden" name="page" value="signup" />
+        <input type="submit" value="SignUp">
+        <a href="/login" class="buttonInfo">Login</a>
+    </form>
+    {% else %}
+    <br><br>
+    <div div class="col-lg-8 login-title container">
+        <h1>Already Logged In as {{data['username']}}</h1>
+    </div>
+    <div div class="col-lg-8 login-title container">
+        <button class="btn btn-outline-primary" onclick="logout()">LOGOUT</button>
+    </div>
+    {% endif %}
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script>
+    </script>
+</body>
+
+</html>

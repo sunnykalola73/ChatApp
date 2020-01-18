@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Chit-Chat</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel='stylesheet' type='text/css' media='screen' href="{{ url_for('static', filename='css/login.css') }}">
+</head>
+
+<body>
+    <div class="col-lg-8 login-title container">
+        <button class="logout" onclick="go('/room')">BACK</button>
+        <button class="logout" style="float: right; margin-left: 0px;" onclick="logout()">LOGOUT</button>
+    </div>
+    </div>
+    <br>
+    <div div class="col-lg-8 login-title container" style="margin:auto">
+        <h2>{{ data['receiverName'] }} &emsp;&emsp;
+            <div style="float: right;">{{ data['senderMail'] }}</div>
+        </h2>
+        <br>
+        <div id="messageBox" style="font-size: 25px;">
+            {% for i in range(data['message']|length) %} {% if data['message'][i][2] == False %}
+            <p style="text-align: left;">{{data['message'][i][0]}} <span style="font-size: .4em;">{{data['message'][i][1]}}</span></p>
+            {% else %}
+            <p style="text-align: right;">{{data['message'][i][0]}} <span style="font-size: .4em;">{{data['message'][i][1]}}</span></p>
+            {% endif %} {% endfor %}
+        </div>
+    </div>
+    <br>
+    <input type="hidden" id="senderMail" value="{{data['senderMail']}}" />
+    <input type="hidden" id="receiverMail" value="{{data['receiverMail']}}" />
+    <div class="col-lg-8 container" style="margin: auto;">
+        <input class="col-lg-9 msg" type="text" placeholder="Enter Your Message.." name="message" id="message">
+        <button class="col-lg-2 btn logout btn-outline-primary" id="send" onclick="send_message()">SEND</button>
+    </div>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script>
+        window.onload = function() {
+            var objDiv = document.getElementById("messageBox");
+            objDiv.scrollTop = objDiv.scrollHeight;
+        }
+        var message;
+
+        function home() {
+            window.location = "/";
+        }
+        var input = document.getElementById("message");
+        input.addEventListener("keyup", function(event) {
+            if (event.keyCode === 13) {
+                event.preventDefault();
+                document.getElementById("send").click();
+            }
+        });
+
+        function send_message() {
+            message = document.getElementById("message").value;
+            document.getElementById("message").value = "";
+            if (message.trim() != "") {
+                $.post("/storemessage", //<-- target url
+                    { //it's data
+                        'senderMail': document.getElementById('senderMail').value,
+                        'receiverMail': document.getElementById('receiverMail').value,
+                        'message': message
+                    },
+                    function(data, status) { //response handler function
+                        //console.log(status + ' ' + data);
+                    });
+            }
+        }
+    </script>
+
+</body>
+
+
+</html>

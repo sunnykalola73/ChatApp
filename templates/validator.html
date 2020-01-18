@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Error</title>
+</head>
+
+<body>
+    <input type="hidden" id="username" value="{{ data }}">
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script>
+        function home() {
+            alert(" Welcome to Chat App...{{ data }}");
+            window.location = "/room";
+        }
+        var username = document.getElementById('username').value;
+        set_cookie('username', username, 30 * 60);
+        home();
+    </script>
+</body>
+
+</html>
