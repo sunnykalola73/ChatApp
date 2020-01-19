@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chit-Chat</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel='stylesheet' type='text/css' media='screen' href="{{ url_for('static', filename='css/login.css') }}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="{{ url_for('static', filename='js/jquery.js') }}"></script>
+</head>
+
+<body>
+    <style>
+        .logout {
+            margin-top: 0%;
+            margin-left: 110%;
+        }
+    </style>
+    <div div class="col-lg-8 login-title container">
+        <h2>{{ error }}</h2>
+    </div>
+    <div div class="col-lg-8 login-title container">
+        <button class="logout" onclick="logout()">LOGOUT</button>
+    </div>
+    <div class="container col-lg-2" style="text-align:center">
+        <h2>Users</h2>
+    </div>
+    <br> {% for i in range(data['users']|length) %} {% if data['users'][i] != data['username'] %} {% set x = data['email'][i] %}
+    <div class="col-lg-3 container" onmouseover="hover('user{{i}}')" id="user{{i}}" onmouseout="hover2('user{{i}}')">
+        <p class="user" onclick="go_to_chat('user{{i}}','{{x}}')">
+            {{ data['users'][i] }}</p>
+        </a>
+    </div>
+    {% endif %} {% else %}
+    <div class="container col-lg-6">
+        <p style="text-align:center; background-color:rgb(255,100,50);opacity:0.7">No users except you</p>
+    </div>
+    {% endfor %} {% if (data['users']|length) == 1 %}
+    <div class="container col-lg-6">
+        <p style="text-align:center; background-color:rgb(255,100,50);opacity:0.7">No users except you</p>
+    </div>
+    {% endif %}
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script>
+        function home() {
+            window.location = "/";
+        }
+
+        function go_to_chat(id, receiverMail) {
+            var id = Number(id.slice(4, ).trim());
+            set_cookie('receiverMail', receiverMail);
+            // Session['person'] = person
+            //     // sessionStorage.setItem("person", person);
+            window.location = "/chat";
+        }
+
+        function hover(id) {
+            document.getElementById(id).style.opacity = 1;
+        }
+
+        function hover2(id) {
+            document.getElementById(id).style.opacity = 0.7;
+        }
+    </script>
+</body>
+
+</html>

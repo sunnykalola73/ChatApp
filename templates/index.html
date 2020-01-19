@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Home</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel='stylesheet' type='text/css' media='screen' href="{{ url_for('static', filename='css/login.css') }}">
+</head>
+
+<body>
+    <br><br>
+    <div div class="col-lg-8 login-title container">
+        {% if data['username'] != None %}
+        <div class="logout">
+            <div class="col-lg-8 login-title container">
+                <button class="buttonInfo" onclick="logout()">LOGOUT</button>
+            </div>
+        </div>
+        <div id="information">Logged in as {{data['username']}}</div>
+        <br>
+        <div class="col-lg-8 login-title container">
+            <button class="buttonInfo" onclick="go('room')">Go To Room</button>
+        </div>
+        {% endif %}
+    </div>
+    <br><br> {% if data['username'] == None %}
+    <div class="col-lg-8 login-title container">
+        <h2 align="center">Welcome To Chat App!</h2>
+    </div>
+    <div div class="col-lg-8 login-title container">
+        <button class="buttonInfo" onclick="go('login')">LOGIN</button>
+    </div>
+    <br>
+    <div div class="col-lg-8 login-title container">
+        <button class="buttonInfo" onclick="go('signup')">SIGNUP</button>
+    </div>
+    {% endif %}
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+
+</html>
